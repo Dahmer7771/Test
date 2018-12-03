@@ -1,26 +1,15 @@
 // Создание константы таблицы GoodTable
 const GOOD_TABLE = document.getElementById('GoodTable');
 
-// WRAPPER - Контейнер для элементов GoodTable, PlusCell, PlusRow
-const WRAPPER = document.getElementsByClassName('Wrapper')[0];
-
 // MINUS_CELL - кнопка удаления колонки, 
 // MINUS_ROW - кнопка удаления ряда
-const MINUS_CELL = document.getElementsByClassName('ButtonMinus')[0];
-const MINUS_ROW = document.getElementsByClassName('ButtonMinus')[1];
+const MINUS_CELL = document.getElementsByClassName('BtnTop')[0];
+const MINUS_ROW = document.getElementsByClassName('BtnLeft')[0];
 
 // PLUS_CELL - кнопка добавления колонки, 
 // PLUS_ROW - кнопка добавления ряда
-const PLUS_CELL = document.getElementsByClassName('ButtonPlus')[1];
-const PLUS_ROW = document.getElementsByClassName('ButtonPlus')[0];
-
-// Начальное значение параметров стиля кнопок 
-// добавления колонок и рядов
-var plusCellStyleLeft = 230;
-var plusRowStyleTop = 0;
-
-// Начальная ширина wrapper
-var wrapperWidth = 286;
+const PLUS_CELL = document.getElementsByClassName('BtnRight')[0];
+const PLUS_ROW = document.getElementsByClassName('BtnBottom')[0];
 
 // Таймер скрытия кнопок удаления
 var timerHideButtons;
@@ -65,7 +54,7 @@ function ToShowMinusButtons() {
 // Функция перемещения кнопки удаления колонок
 function ButtonMinusCellMotion(cell) {
     // Начальное значение свойства left кнопки для удаления колонок
-    var buttonMinusCellStyleLeft = 59;
+    var buttonMinusCellStyleLeft = 3;
 
     // Проверка имеет ли колонка на которую навелись индекс 0
     if (cell != 0) {
@@ -95,36 +84,15 @@ function ButtonMinusRowMotion(row) {
 GOOD_TABLE.onmouseover = function (event) {
     clearTimeout(timerHideButtons);
     ToShowMinusButtons();
-    // setTimeout(ToHideMinusButtons, 2000);
 
     var target = event.target;
 
     // Если элемент на который нажали не 'TD', то 
     // нужно прекратить выполнение функции
     if (target.tagName != 'TD') return;
-
-    // Перебор элементов TR и нахождение в каком находится 
-    // ячейка на которую кликнули
-    for (var i = 0; i < GOOD_TABLE.rows.length; i++) {
-        if (target.parentNode == GOOD_TABLE.rows[i]) {
-            currentRowNum = i;
-
-            // Перемещение кнопки удаления рядов
-            ButtonMinusRowMotion(currentRowNum);
-            break;
-        }
-    }
-
-    // Перебор элементов TD внутри ряда по которому кликнули
-    for (var i = 0; i < GOOD_TABLE.rows[0].cells.length; i++) {
-        if (target == GOOD_TABLE.rows[currentRowNum].cells[i]) {
-            currentCellNum = i;
-
-            // Перемещение кнопки удаления колонок
-            ButtonMinusCellMotion(currentCellNum);
-            break;
-        }
-    }
+    
+    MINUS_ROW.style.top = target.offsetTop + 'px';
+    MINUS_CELL.style.left = target.offsetLeft + 'px';
 }
 
 // Если мыша не наведена на таблицу то срабатывает 
@@ -142,16 +110,6 @@ PLUS_CELL.onclick = function () {
     for (var i = 0; i < rowsInGoodTable.length; i++) {
         rowsInGoodTable[i].insertCell(-1);
     }
-
-    // Изменение положения кнопки добавления колонок
-    plusCellStyleLeft += 56;
-    PLUS_CELL.style.left = plusCellStyleLeft + 'px';
-
-    // Изминение ширины wrapper
-    wrapperWidth += 56;
-    WRAPPER.style.width = wrapperWidth + 'px';
-
-
 }
 
 PLUS_ROW.onclick = function () {
@@ -174,10 +132,6 @@ MINUS_CELL.onclick = function () {
         }
 
         ButtonMinusCellMotion(GOOD_TABLE.rows[0].cells.length - 1);
-
-        // Перемещение кнопки добавления ряда
-        plusCellStyleLeft -= 56;
-        PLUS_CELL.style.left = plusCellStyleLeft + 'px';
 
         ToHideMinusButtons();
     }

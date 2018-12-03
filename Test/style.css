@@ -11,33 +11,27 @@ span {
     font-size: 40px;
 }
 
-#Module{
-    height: 500px;
+#Module {
     position: relative;
+    margin: 60px;
+    display: inline-block;
 }
 
-.Wrapper{
-    position: relative;
-    left: 56px;
-    top: -54px;
-    min-height: 300px;
-    width: 286px;
-}
-
-#GoodTable{
+#GoodTable {
     border: 1px solid #48AAE6;
     margin: 1px;
     position: relative;
 }
 
-td{
+td {
     border: 1px solid #48AAE6;
     width: 50px;
+    min-width: 50px;
     height: 50px;
     background: #48AAE6;
 }
 
-.OperationButton{
+.OperationButton {
     width: 50px;
     height: 50px;
     margin: 1px;
@@ -49,6 +43,7 @@ td{
     color: white;
     font-weight: bold;
     user-select: none;
+    position: absolute;
 }
 
 .OperationButton:hover{
@@ -62,31 +57,33 @@ td{
     border: 2px solid #B20000;
     background: #B20000;
     transition: 0.5s;
-    position: relative;
     visibility: hidden;
-}
-
-.ButtonMinus:nth-of-type(1){
-    left: 59px;
-}
-
-.ButtonMinus:nth-of-type(2){
-    top: 4px;
 }
 
 .ButtonPlus{
     border: 2px solid #F3A500;
     background: #F3A500;
-    position: absolute;
 }
 
-.ButtonPlus:nth-of-type(1){
-    left: 3px;
+.BtnLeft {
+    right: 100%;
+    margin-top: 2px;
 }
 
-.ButtonPlus:nth-of-type(2){
-    top: 2px;
-    left: 230px;
+.BtnTop {
+    bottom: 100%;
+    left: 0%;
+    margin-left: 2px;
+}
+
+.BtnRight {
+    left: 100%;
+    margin-top: 4px;
+}
+
+.BtnBottom {
+    top: 100%;
+    margin-left: 4px;
 }
 
 .Inner{
@@ -96,5 +93,4 @@ td{
     color: white;
     font-weight: bold;
     user-select: none;
-}
-
+} 
