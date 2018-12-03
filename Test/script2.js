@@ -93,6 +93,23 @@ GOOD_TABLE.onmouseover = function (event) {
     
     MINUS_ROW.style.top = target.offsetTop + 'px';
     MINUS_CELL.style.left = target.offsetLeft + 'px';
+
+    // Перебор элементов TR и нахождение в каком находится 
+    // ячейка на которую кликнули
+    for (var i = 0; i < GOOD_TABLE.rows.length; i++) {
+        if (target.parentNode == GOOD_TABLE.rows[i]) {
+            currentRowNum = i;
+            break;
+        }
+    }
+
+    // Перебор элементов TD внутри ряда по которому кликнули
+    for (var i = 0; i < GOOD_TABLE.rows[0].cells.length; i++) {
+        if (target == GOOD_TABLE.rows[currentRowNum].cells[i]) {
+            currentCellNum = i;
+            break;
+        }
+    }
 }
 
 // Если мыша не наведена на таблицу то срабатывает 
