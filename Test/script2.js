@@ -50,36 +50,6 @@ function ToShowMinusButtons() {
     }
 }
 
-
-// Функция перемещения кнопки удаления колонок
-function ButtonMinusCellMotion(cell) {
-    // Начальное значение свойства left кнопки для удаления колонок
-    var buttonMinusCellStyleLeft = 3;
-
-    // Проверка имеет ли колонка на которую навелись индекс 0
-    if (cell != 0) {
-        MINUS_CELL.style.left = ((cell) * 56 + buttonMinusCellStyleLeft) + 'px';
-    }
-
-    else {
-        MINUS_CELL.style.left = buttonMinusCellStyleLeft + 'px';
-    }
-}
-
-// Функция перемещения кнопки удаления рядов
-function ButtonMinusRowMotion(row) {
-    // Начальное значение свойства top кнопки для удаления рядов
-    var buttonMinusRowStyleTop = 4;
-
-    if (row != 0) {
-        MINUS_ROW.style.top = (row * 56 + 4) + 'px';
-    }
-
-    else {
-        MINUS_ROW.style.top = buttonMinusRowStyleTop + 'px';
-    }
-}
-
 // Обработка события при нажатии на таблицу GoodTable
 GOOD_TABLE.onmouseover = function (event) {
     clearTimeout(timerHideButtons);
@@ -90,26 +60,15 @@ GOOD_TABLE.onmouseover = function (event) {
     // Если элемент на который нажали не 'TD', то 
     // нужно прекратить выполнение функции
     if (target.tagName != 'TD') return;
-    
+
     MINUS_ROW.style.top = target.offsetTop + 'px';
     MINUS_CELL.style.left = target.offsetLeft + 'px';
 
-    // Перебор элементов TR и нахождение в каком находится 
-    // ячейка на которую кликнули
-    for (var i = 0; i < GOOD_TABLE.rows.length; i++) {
-        if (target.parentNode == GOOD_TABLE.rows[i]) {
-            currentRowNum = i;
-            break;
-        }
-    }
+    // Сохранение индекса ряда на который навели мышкой
+    currentRowNum = Array.prototype.indexOf.call(Array.from(GOOD_TABLE.rows), target.parentNode);
 
-    // Перебор элементов TD внутри ряда по которому кликнули
-    for (var i = 0; i < GOOD_TABLE.rows[0].cells.length; i++) {
-        if (target == GOOD_TABLE.rows[currentRowNum].cells[i]) {
-            currentCellNum = i;
-            break;
-        }
-    }
+    // Сохранение индекса колонки на которую навели мышкой
+    currentCellNum = Array.prototype.indexOf.call(Array.from(GOOD_TABLE.rows[currentRowNum].cells), target);
 }
 
 // Если мыша не наведена на таблицу то срабатывает 
@@ -148,7 +107,8 @@ MINUS_CELL.onclick = function () {
             GOOD_TABLE.rows[i].deleteCell(currentCellNum);
         }
 
-        ButtonMinusCellMotion(GOOD_TABLE.rows[0].cells.length - 1);
+        // Смещение кнопки удаления колонок до последней колонки
+        MINUS_CELL.style.left = GOOD_TABLE.rows[0].cells[GOOD_TABLE.rows[0].cells.length - 1].offsetLeft + 'px';
 
         ToHideMinusButtons();
     }
@@ -158,7 +118,10 @@ MINUS_CELL.onclick = function () {
 MINUS_ROW.onclick = function () {
     if (GOOD_TABLE.rows.length != 1) {
         GOOD_TABLE.deleteRow(currentRowNum);
-        ButtonMinusRowMotion(GOOD_TABLE.rows.length - 1);
+
+        // Смещение кнопки удаления рядов до последнего ряда
+        MINUS_ROW.style.top = GOOD_TABLE.rows[GOOD_TABLE.rows.length - 1].offsetTop + 'px';
+
         ToHideMinusButtons();
     }
 }
