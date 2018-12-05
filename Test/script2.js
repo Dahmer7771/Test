@@ -65,10 +65,10 @@ GOOD_TABLE.onmouseover = function (event) {
     MINUS_CELL.style.left = target.offsetLeft + 'px';
 
     // Сохранение индекса ряда на который навели мышкой
-    currentRowNum = Array.prototype.indexOf.call(Array.from(GOOD_TABLE.rows), target.parentNode);
+    currentRowNum = target.parentNode.rowIndex;
 
     // Сохранение индекса колонки на которую навели мышкой
-    currentCellNum = Array.prototype.indexOf.call(Array.from(GOOD_TABLE.rows[currentRowNum].cells), target);
+    currentCellNum = target.cellIndex;
 }
 
 // Если мыша не наведена на таблицу то срабатывает 
