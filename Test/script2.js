@@ -12,23 +12,23 @@ const PLUS_CELL = document.getElementsByClassName('BtnRight')[0];
 const PLUS_ROW = document.getElementsByClassName('BtnBottom')[0];
 
 // Таймер скрытия кнопок удаления
-var timerHideButtons;
+let timerHideButtons;
 
 // Переменная которая будет хранить номер 
 // ряда в котором находится элемент который был нажат
-var currentRowNum;
+let currentRowNum;
 
 // Переменная которая будет хранить номер 
 // колонки в которой находится элемент который был нажат
-var currentCellNum;
+let currentCellNum;
 
 // Создание таблицы 4*4 после загрузки страницы
 window.onload = function () {
     ToHideMinusButtons();
 
-    for (var i = 0; i < 4; i++) {
-        var row = GOOD_TABLE.insertRow(i);
-        for (var x = 0; x < 4; x++) {
+    for (let i = 0; i < 4; i++) {
+        let row = GOOD_TABLE.insertRow(i);
+        for (let x = 0; x < 4; x++) {
             row.insertCell(x);
         }
     }
@@ -51,11 +51,11 @@ function ToShowMinusButtons() {
 }
 
 // Обработка события при нажатии на таблицу GoodTable
-GOOD_TABLE.onmouseover = function (event) {
+GOOD_TABLE.onmouseover = (event) => {
     clearTimeout(timerHideButtons);
     ToShowMinusButtons();
 
-    var target = event.target;
+    let target = event.target;
 
     // Если элемент на который нажали не 'TD', то 
     // нужно прекратить выполнение функции
@@ -73,37 +73,37 @@ GOOD_TABLE.onmouseover = function (event) {
 
 // Если мыша не наведена на таблицу то срабатывает 
 // таймер скрытия кнопок удаления
-GOOD_TABLE.onmouseout = function () {
+GOOD_TABLE.onmouseout = () => {
     timerHideButtons = setTimeout(ToHideMinusButtons, 500);
 }
 
 // Обработка события при нажатии на кнопку добавления колонки
-PLUS_CELL.onclick = function () {
+PLUS_CELL.onclick = () => {
     // Переменная для хранения массива рядов
-    var rowsInGoodTable = GOOD_TABLE.rows;
+    let rowsInGoodTable = GOOD_TABLE.rows;
 
     // Добавление ячейки в конец каждого ряда
-    for (var i = 0; i < rowsInGoodTable.length; i++) {
+    for (let i = 0; i < rowsInGoodTable.length; i++) {
         rowsInGoodTable[i].insertCell(-1);
     }
 }
 
-PLUS_ROW.onclick = function () {
+PLUS_ROW.onclick = () => {
     // Количество ячеек которое нужно добавить в ряд
-    var rowsInGoodTableLength = GOOD_TABLE.rows.length;
+    let rowsInGoodTableLength = GOOD_TABLE.rows.length;
 
     GOOD_TABLE.insertRow(-1);
 
     // Добавление ячеек в ряд
-    for (var i = 0; i < GOOD_TABLE.rows[0].cells.length; i++) {
+    for (let i = 0; i < GOOD_TABLE.rows[0].cells.length; i++) {
         GOOD_TABLE.rows[rowsInGoodTableLength].insertCell(i);
     }
 }
 
 // Удаление колонки
-MINUS_CELL.onclick = function () {
+MINUS_CELL.onclick = () => {
     if (GOOD_TABLE.rows[0].cells.length != 1) {
-        for (var i = 0; i < GOOD_TABLE.rows.length; i++) {
+        for (let i = 0; i < GOOD_TABLE.rows.length; i++) {
             GOOD_TABLE.rows[i].deleteCell(currentCellNum);
         }
 
@@ -115,7 +115,7 @@ MINUS_CELL.onclick = function () {
 }
 
 // Удаление ряда
-MINUS_ROW.onclick = function () {
+MINUS_ROW.onclick = () => {
     if (GOOD_TABLE.rows.length != 1) {
         GOOD_TABLE.deleteRow(currentRowNum);
 
@@ -127,21 +127,21 @@ MINUS_ROW.onclick = function () {
 }
 
 // Отмена таймера при наведении на кнопку удаления колонок
-MINUS_CELL.onmouseover = function () {
+MINUS_CELL.onmouseover = () => {
     clearTimeout(timerHideButtons);
 }
 
 // Отмена таймера при наведении на кнопку удаления рядов
-MINUS_ROW.onmouseover = function () {
+MINUS_ROW.onmouseover = () => {
     clearTimeout(timerHideButtons);
 }
 
 // Установка таймера при уведении мыши с кнопки удаления колонок
-MINUS_CELL.onmouseout = function () {
+MINUS_CELL.onmouseout = () => {
     timerHideButtons = setTimeout(ToHideMinusButtons, 500);
 }
 
 // Установка таймера при уведении мыши с кнопки удаления рядов
-MINUS_ROW.onmouseout = function () {
+MINUS_ROW.onmouseout = () => {
     timerHideButtons = setTimeout(ToHideMinusButtons, 500);
 }
