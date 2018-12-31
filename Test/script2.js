@@ -1,3 +1,5 @@
+'use strict';
+
 // Создание константы таблицы GoodTable
 const GOOD_TABLE = document.getElementById('GoodTable');
 
@@ -83,28 +85,33 @@ PLUS_CELL.onclick = () => {
     let rowsInGoodTable = GOOD_TABLE.rows;
 
     // Добавление ячейки в конец каждого ряда
-    for (let i = 0; i < rowsInGoodTable.length; i++) {
-        rowsInGoodTable[i].insertCell(-1);
+    for (let row of rowsInGoodTable) {
+        row.insertCell(-1);
     }
 }
 
 PLUS_ROW.onclick = () => {
-    // Количество ячеек которое нужно добавить в ряд
-    let rowsInGoodTableLength = GOOD_TABLE.rows.length;
+    // Количнство ячеек которое нужно вставить
+    let cellsInRows = GOOD_TABLE.rows[0].cells.length;
 
+    // Добавление ряда в таблицу
     GOOD_TABLE.insertRow(-1);
 
-    // Добавление ячеек в ряд
-    for (let i = 0; i < GOOD_TABLE.rows[0].cells.length; i++) {
-        GOOD_TABLE.rows[rowsInGoodTableLength].insertCell(i);
+    // Ряд в который будут добавлены ячейки
+    let lastRow = GOOD_TABLE.rows[GOOD_TABLE.rows.length - 1];
+
+    for(let i = 0; i < cellsInRows; i++) {
+        lastRow.insertCell(i);
     }
 }
 
 // Удаление колонки
 MINUS_CELL.onclick = () => {
     if (GOOD_TABLE.rows[0].cells.length != 1) {
-        for (let i = 0; i < GOOD_TABLE.rows.length; i++) {
-            GOOD_TABLE.rows[i].deleteCell(currentCellNum);
+        let rows = GOOD_TABLE.rows;
+
+        for(let row of rows) {
+            row.deleteCell(currentCellNum);
         }
 
         // Смещение кнопки удаления колонок до последней колонки
